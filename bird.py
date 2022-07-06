@@ -13,9 +13,12 @@ class Bird:
     
 
     def __init__(self, x, y):
+        # Initialize the object
+        # :param x: starting x pos (int)
+        # :param y: starting y pos (int)
         self.x = x
         self.y = y
-        self.tilt = 0
+        self.tilt = 0   # degrees to tilt
         self.tick_count = 0
         self.vel = 0
         self.height = self.y
@@ -23,13 +26,15 @@ class Bird:
         self.img = self.IMGS[0]
     
     def jump(self):
+        # make the bird jump
         self.vel = -10.5
         self.tick_count = 0
         self.height = self.y
 
     def move(self):
+        # make the bird move
         self.tick_count += 1
-        # displacement formula to handle jumping and falling arc
+        # displacement formula to handle downward acceleration
         d = self.vel*self.tick_count + 1.5*self.tick_count**2
         
         # setting terminal velocity so acceleration in any given direction doesn't exceed 16
@@ -37,7 +42,7 @@ class Bird:
             d = 16
 
         if d<0:
-            d-=2
+            d -= 2
         
         self.y = self.y + d
 
@@ -52,6 +57,7 @@ class Bird:
                 self.tilt -= self.ROT_VEL
 
     def draw(self, win):
+        # draw the bird 
         self.img_count += 1
 
         # determines what bird image to show based on the image count which is incremented each frame/tick

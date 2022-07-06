@@ -10,6 +10,10 @@ class Pipe:
     VEL = 5
 
     def __init__(self, x):
+        # initialize pipe object
+        # :param x: int
+        # :param y: int
+
         self.x = x
         self.height = 0
 
@@ -21,29 +25,35 @@ class Pipe:
         self.passed = False
         self.set_height()
         
-    # sets random height of pipes on screen
+    
     def set_height(self):
+        # sets random height of pipes from the top of the screen
         self.height = random.randrange(50,450)
         self.top = self.height - self.PIPE_TOP.get_height()
         self.bottom = self.height + self.GAP
 
-    # moves pipes towards player
+    
     def move(self):
+        # moves pipes towards player based on vel
         self.x -= self.VEL
     
-    # draw pipes on screen
+    
     def draw(self, win):
+        # draw both the top and bottom of the pipe
+        # :param win: pygame window/surface
         win.blit(self.PIPE_TOP, (self.x, self.top))
         win.blit(self.PIPE_BOTTOM, (self.x, self.bottom))
 
-    # mask collision for pixel perfect collision
+    
     def collide(self, bird):
+        # returns if a point is colliding with the pipe
+        # :param bird: Bird object
         bird_mask = bird.get_mask()
         top_mask = pygame.mask.from_surface(self.PIPE_TOP)
         bottom_mask = pygame.mask.from_surface(self.PIPE_BOTTOM)
 
         top_offset = (self.x - bird.x, self.top - round(bird.y))
-        bottom_offset = (self.x -bird.x, self.bottom )
+        bottom_offset = (self.x -bird.x, self.bottom - round(bird.y))
 
         b_point = bird_mask.overlap(bottom_mask, bottom_offset)
         t_point = bird_mask.overlap(top_mask, top_offset)
